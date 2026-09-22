@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">MiReplicaIMC</string>
+    <string name="titulo_principal">Calculadora de IMC</string>
+    <string name="subtitulo_principal">Ingrese sus datos para obtener una referencia de su índice de masa corporal.</string>
+    <string name="seccion_datos">Datos personales</string>
+    <string name="formula_imc">El cálculo utiliza el peso en kilogramos dividido entre la estatura al cuadrado.</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_peso">Peso</string>
+    <string name="hint_estatura">Estatura</string>
+    <string name="unidad_kilogramos">kg</string>
+    <string name="unidad_metros">m</string>
+    <string name="boton_calcular">Calcular IMC</string>
+    <string name="boton_volver">Realizar otro cálculo</string>
+    <string name="error_nombre">Ingrese su nombre</string>
+    <string name="error_peso">Ingrese un peso válido mayor que cero</string>
+    <string name="error_estatura">Ingrese una estatura válida mayor que cero</string>
+    <string name="resultado_titulo">Resultado del cálculo</string>
+    <string name="resultado_descripcion">Esta información fue enviada desde la pantalla anterior.</string>
+    <string name="resultado_nombre_inicial">Nombre no disponible</string>
+    <string name="resultado_imc_inicial">IMC: 0.00</string>
+    <string name="resultado_nombre_formato">Resultado de %1$s</string>
+    <string name="resultado_imc_formato">IMC: %1$.2f</string>
+    <string name="resultado_nota">El IMC es una referencia general y no reemplaza una evaluación profesional.</string>
+    <string name="valor_no_disponible">No disponible</string>
+    <string name="clasificacion_bajo_peso">Bajo peso</string>
+    <string name="clasificacion_peso_normal">Peso normal</string>
+    <string name="clasificacion_sobrepeso">Sobrepeso</string>
+    <string name="clasificacion_obesidad">Obesidad</string>
+</resources>
