@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Estudio · MiniProyecto IMC — MiReplicaIMC</title>
+<style>
+  :root{
+    --azul-oscuro:#12304A;
+    --azul-principal:#176B87;
+    --turquesa:#36A9A1;
+    --blanco:#FFFFFF;
+    --blanco-suave:#EDF9F8;
+    --gris-texto:#506170;
+    --gris-borde:#C7D8DC;
+    --superficie:#F3FAF9;
+    --fondo:#f6faf9;
+    --codigo-bg:#f3f8f9;
+    --codigo-fg:#1f3a4d;
+    --warn-bg:#fff7e6;
+    --warn-borde:#e6b84c;
+    --ok-bg:#e9f7ef;
+    --ok-borde:#37a56c;
+    --info-bg:#e8f1fb;
+    --info-borde:#5b8dd3;
+    --tu-bg:#fff1f2;
+    --tu-borde:#e0556e;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Segoe UI',Arial,Helvetica,sans-serif;
+    background:var(--fondo);
+    color:var(--gris-texto);
+    line-height:1.6;
+  }
+  .layout{display:flex;max-width:1280px;margin:0 auto;}
+  aside.toc{
+    width:250px;
+    position:sticky;top:0;
+    height:100vh;overflow-y:auto;
+    background:var(--blanco);
+    border-right:1px solid var(--gris-borde);
+    padding:20px 16px;
+    flex-shrink:0;
+  }
+  aside.toc h2{
+    font-size:14px;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--azul-oscuro);margin:0 0 12px;
+  }
+  aside.toc a{
+    display:block;padding:6px 10px;border-radius:8px;
+    color:var(--gris-texto);text-decoration:none;
+    font-size:14px;margin:2px 0;
+    border-left:3px solid transparent;
+  }
+  aside.toc a:hover{background:var(--superficie);color:var(--azul-principal);}
+  aside.toc a.activo{background:var(--blanco-suave);border-left-color:var(--turquesa);color:var(--azul-oscuro);font-weight:600;}
+  aside.toc a.nivel2{padding-left:22px;font-size:13px;}
+
+  main{flex:1;min-width:0;padding:32px 40px 80px;}
+  header.hero{
+    background:linear-gradient(120deg,var(--azul-oscuro),var(--turquesa));
+    color:var(--blanco);border-radius:18px;
+    padding:36px 32px;margin-bottom:32px;
+  }
+  header.hero h1{margin:0 0 8px;font-size:30px;}
+  header.hero p{margin:4px 0;color:var(--blanco-suave);}
+  .badge{
+    display:inline-block;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.35);
+    padding:3px 12px;border-radius:999px;font-size:12px;margin:6px 6px 0 0;
+  }
+  section{
+    background:var(--blanco);border:1px solid var(--gris-borde);
+    border-radius:14px;padding:26px 28px;margin-bottom:26px;
+  }
+  section h2{
+    margin:0 0 14px;font-size:23px;color:var(--azul-oscuro);
+    border-bottom:2px solid var(--blanco-suave);padding-bottom:10px;
+  }
+  section h3{font-size:18px;color:var(--azul-principal);margin:22px 0 8px;}
+  section h4{font-size:15px;color:var(--azul-oscuro);margin:16px 0 6px;}
+  p{margin:8px 0;}
+  ul,ol{margin:8px 0;padding-left:24px;}
+  li{margin:4px 0;}
+  code{
+    font-family:Consolas,'Courier New',monospace;
+    background:var(--superficie);color:var(--azul-oscuro);
+    padding:1px 6px;border-radius:5px;font-size:.92em;
+  }
+  .chip-tu{
+    display:inline-block;background:var(--tu-bg);border:1px solid var(--tu-borde);color:#b0344c;
+    font-size:11px;font-weight:700;padding:2px 10px;border-radius:999px;vertical-align:middle;
+    margin-left:8px;letter-spacing:.4px;
+  }
+  .rutat{
+    background:var(--blanco-suave);border:1px dashed var(--azul-principal);
+    padding:6px 12px;border-radius:8px;font-family:Consolas,monospace;
+    font-size:13px;margin:6px 0 12px;color:var(--azul-principal);display:inline-block;
+  }
+
+  .code-wrap{position:relative;margin:12px 0;}
+  .code-wrap .langbar{
+    background:#dce9ec;border-radius:10px 10px 0 0;
+    border:1px solid var(--gris-borde);border-bottom:none;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:6px 12px;color:var(--azul-oscuro);font-size:12px;letter-spacing:.5px;
+  }
+  .copy-btn{
+    background:var(--blanco);color:var(--azul-principal);border:1px solid var(--gris-borde);
+    border-radius:7px;padding:3px 12px;font-size:12px;cursor:pointer;
+    font-family:inherit;
+  }
+  .copy-btn:hover{background:var(--blanco-suave);}
+  pre{
+    margin:0;background:var(--codigo-bg);color:var(--codigo-fg);
+    border:1px solid var(--gris-borde);border-radius:0 0 10px 10px;overflow-x:auto;
+    padding:16px 18px;font-size:13px;line-height:1.55;
+    font-family:Consolas,'Courier New',monospace;
+  }
+  pre .c{color:#5f8294;font-style:italic;}
+  pre .k{color:#a63d76;}
+  pre .n{color:#175d8f;}
+  pre .s{color:#8a5a00;}
+
+  .caja{padding:12px 16px;border-radius:10px;border-left:4px solid;margin:12px 0;font-size:14.5px;}
+  .caja.info{background:var(--info-bg);border-color:var(--info-borde);}
+  .caja.warn{background:var(--warn-bg);border-color:var(--warn-borde);}
+  .caja.ok{background:var(--ok-bg);border-color:var(--ok-borde);}
+  .caja.tu{background:var(--tu-bg);border-color:var(--tu-borde);}
+  .caja strong.tit{display:block;margin-bottom:4px;font-size:13.5px;letter-spacing:.4px;text-transform:uppercase;}
+
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;}
+  th,td{border:1px solid var(--gris-borde);padding:8px 12px;text-align:left;vertical-align:top;}
+  th{background:var(--blanco-suave);color:var(--azul-oscuro);}
+  tr:nth-child(even) td{background:#fbfdfd;}
+  .num{text-align:center;color:var(--azul-principal);font-weight:700;}
+
+  ol.flujo{list-style:none;counter-reset:f;padding:0;}
+  ol.flujo li{
+    counter-increment:f;position:relative;padding:10px 14px 10px 52px;margin:6px 0;
+    background:var(--superficie);border:1px solid var(--gris-borde);border-radius:10px;
+  }
+  ol.flujo li::before{
+    content:counter(f);
+    position:absolute;left:12px;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    background:var(--azul-principal);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+  }
+  .top-btn{
+    position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;
+    background:var(--azul-principal);color:#fff;border:none;font-size:20px;cursor:pointer;
+    box-shadow:0 4px 12px rgba(18,48,74,.35);display:none;
+  }
+  .top-btn.visible{display:block;}
+  @media print{
+    aside.toc, .copy-btn, .top-btn{display:none !important;}
+    body{background:#fff;}
+    section{box-shadow:none;break-inside:avoid;}
+    pre{break-inside:avoid;background:#fff;}
+    .code-wrap .langbar{background:#eef3f4;color:#12304A;}
+    header.hero{background:#dce9ec;color:#12304A;}
+    header.hero p{color:#506170;}
+    .layout{display:block;}
+    main{padding:0;}
+  }
+  @media (max-width:900px){
+    .layout{display:block;}
+    aside.toc{display:none;}
+    main{padding:20px 16px 80px;}
+    header.hero h1{font-size:22px;}
+    pre{font-size:12px;padding:12px;}
+  }
+</style>
+</head>
+<body>
+<button class="top-btn" id="topBtn" title="Subir">↑</button>
+<div class="layout">
+<aside class="toc">
+  <h2>Índice de la guía</h2>
+  <nav>
+    <a href="#intro">1. Introducción</a>
+    <a href="#creacion">2. Crear el proyecto paso a paso</a>
+    <a href="#estructura">3. Estructura de carpetas</a>
+    <a href="#gradle">4. Gradle: ¿qué es cada archivo?</a>
+    <a href="#appgradle" class="nivel2">4.1 app/build.gradle.kts</a>
+    <a href="#binding" class="nivel2">4.2 Tu código: buildFeatures</a>
+    <a href="#manifest">5. AndroidManifest.xml</a>
+    <a href="#recursos">6. Recursos y diseño</a>
+    <a href="#layoutmain">7. Tu código: activity_main.xml</a>
+    <a href="#layoutresult">8. Tu código: activity_resultado.xml</a>
+    <a href="#arquitectura">9. Arquitectura y flujo</a>
+    <a href="#mainkt">10. Tu código: MainActivity.kt</a>
+    <a href="#resultkt">11. Tu código: ResultadoActivity.kt</a>
+    <a href="#logica">12. Lógica del IMC</a>
+    <a href="#errores">13. Errores comunes</a>
+    <a href="#buenas">14. Buenas prácticas</a>
+  </nav>
+</aside>
+
+<main>
+<header class="hero">
+  <h1>Guía de Estudio · MiniProyecto: Calculadora de IMC</h1>
+  <p>Repaso paso a paso para el curso <strong>Desarrollo de Aplicaciones Móviles</strong>.</p>
+  <p>Proyecto: <strong>MiReplicaIMC</strong> · Paquete <code>com.example.mireplicaimc</code> · 100% Kotlin</p>
+  <span class="badge">Android</span>
+  <span class="badge">Kotlin</span>
+  <span class="badge">ViewBinding</span>
+  <span class="badge">Material 3</span>
+</header>
+
+<!-- ==================== 1. INTRODUCCIÓN ==================== -->
+<section id="intro">
+<h2>1. Introducción</h2>
+<p>Este mini proyecto construye una <strong>calculadora de Índice de Masa Corporal (IMC)</strong> con dos pantallas:</p>
+<ul>
+  <li><strong>Pantalla 1 (formulario):</strong> el usuario ingresa su nombre, peso (kg) y estatura (m).</li>
+  <li><strong>Pantalla 2 (resultado):</strong> muestra el nombre, el IMC calculado y su clasificación (bajo peso, normal, sobrepeso u obesidad).</li>
+</ul>
+<p>Al finalizar aprenderás a:</p>
+<ul>
+  <li>Crear un proyecto Android con <em>Empty Views Activity</em> en Kotlin.</li>
+  <li>Entender qué hace el sistema de compilación <strong>Gradle</strong> y sus archivos de configuración.</li>
+  <li>Leer y modificar el <strong>AndroidManifest.xml</strong>.</li>
+  <li>Crear interfaces con <strong>XML</strong> usando Material Components (TextInputLayout, MaterialButton).</li>
+  <li>Conectar la interfaz con la lógica mediante <strong>ViewBinding</strong>.</li>
+  <li>Navegar entre pantallas con <strong>Intent</strong> y pasar datos mediante <strong>extras</strong>.</li>
+  <li>Implementar <strong>validación de formularios</strong> mostrando errores en cada campo.</li>
+  <li>Aplicar la fórmula y clasificación del IMC según la OMS.</li>
+</ul>
+</section>
+
+<!-- ==================== 2. CREACIÓN ==================== -->
+<section id="creacion">
+<h2>2. Crear el proyecto paso a paso</h2>
+<h3>2.1 Nuevo proyecto</h3>
+<ol>
+  <li>Abre <strong>Android Studio</strong> y ve a <em>File → New → New Project</em>.</li>
+  <li>Elige la plantilla <strong>Empty Views Activity</strong> (usa XML, no Compose).</li>
+  <li>Configura así el asistente:
+    <table>
+      <tr><th>Campo</th><th>Valor</th><th>¿Por qué?</th></tr>
+      <tr><td>Name</td><td><code>MiReplicaIMC</code></td><td>Nombre visible del proyecto.</td></tr>
+      <tr><td>Package name</td><td><code>com.example.mireplicaimc</code></td><td>Identificador único (como un DNI de la app). Define la carpeta del código.</td></tr>
+      <tr><td>Language</td><td><code>Kotlin</code></td><td>Lenguaje nativo moderno de Android.</td></tr>
+      <tr><td>Minimum SDK</td><td><code>API 26 (Android 8.0)</code></td><td>La versión mínima del celular donde correrá la app (~97% de dispositivos).</td></tr>
+      <tr><td>Build configuration language</td><td><code>Kotlin DSL (build.gradle.kts)</code></td><td>Los archivos de build se escriben en Kotlin (más moderno que Groovy).</td></tr>
+    </table>
+  </li>
+  <li>Presiona <strong>Finish</strong> y espera la <strong>sincronización de Gradle</strong> (Android Studio descarga las dependencias; la barra de progreso aparece abajo).</li>
+</ol>
+
+<div class="caja warn"><strong class="tit">Concepto clave</strong>
+El <em>package name</em> (o <code>applicationId</code>) identifica tu app de forma única. Debe ser distinto si ya instalaste la app del profesor en el emulador, para que no se sobren los datos.
+</div>
+</section>
+
+<!-- ==================== 3. ESTRUCTURA ==================== -->
+<section id="estructura">
+<h2>3. Estructura de carpetas</h2>
+<p>Esta es la anatomía del proyecto después de crearlo y agregar la segunda pantalla:</p>
+<table>
+  <tr><th>Archivo / carpeta</th><th>Función</th></tr>
+  <tr><td><code>settings.gradle.kts</code></td><td>Declara el nombre del proyecto, qué módulos incluye y desde dónde descarga dependencias (Google, Maven).</td></tr>
+  <tr><td><code>build.gradle.kts</code> (raíz)</td><td>Configura los plugins para todos los módulos (<code>apply false</code> = se definen aquí, se activan en cada módulo).</td></tr>
+  <tr><td><code>gradle/libs.versions.toml</code></td><td>Catálogo central de versiones (AGP, Kotlin, librerías). Android Studio lo llama <em>Version Catalog</em>.</td></tr>
+  <tr><td><code>app/build.gradle.kts</code></td><td>Configuración del módulo <strong>app</strong>: SDK, aplicación, dependencias. <strong>Se edita en este proyecto.</strong></td></tr>
+  <tr><td><code>app/src/main/AndroidManifest.xml</code></td><td>"Partida de nacimiento" de la app: declara las actividades y ajustes del sistema.</td></tr>
+  <tr><td><code>app/src/main/java/com/example/mireplicaimc/</code></td><td>Tu código Kotlin: <code>MainActivity.kt</code> y <code>ResultadoActivity.kt</code>. <strong>Se completa en este proyecto.</strong></td></tr>
+  <tr><td><code>app/src/main/res/layout/</code></td><td>Interfaces en XML: <code>activity_main.xml</code> y <code>activity_resultado.xml</code>. <strong>Se completan en este proyecto.</strong></td></tr>
+  <tr><td><code>app/src/main/res/values/</code></td><td>Recursos de texto/valores: <code>strings.xml</code>, <code>colors.xml</code>, <code>dimens.xml</code>, <code>themes.xml</code>.</td></tr>
+  <tr><td><code>app/src/main/res/values-night/</code></td><td>Sobrescribe valores cuando el celular está en <em>modo oscuro</em>.</td></tr>
+  <tr><td><code>app/src/main/res/drawable/</code></td><td>Imágenes y formas dibujables en XML (fondos, chips).</td></tr>
+  <tr><td><code>app/src/main/res/mipmap-*/</code></td><td>Íconos del launcher en varias densidades de pantalla.</td></tr>
+  <tr><td><code>local.properties</code></td><td>Ruta del SDK en TU computadora. <strong>Nunca se sube a Git</strong> (por eso el <code>.gitignore</code> lo excluye).</td></tr>
+</table>
+
+<div class="caja info"><strong class="tit">¿Qué es "res"?</strong>
+La carpeta <code>res</code> (<em>resources</em>) guarda <strong>todo lo que no es código</strong>: textos, colores, medidas, imágenes y temas. Android los compila y los referencia desde el código mediante la clase <code>R</code> (p.&nbsp;ej. <code>R.string.titulo_principal</code>).
+</div>
+</section>
+
+<!-- ==================== 4. GRADLE ==================== -->
+<section id="gradle">
+<h2>4. Gradle: ¿qué hace cada archivo?</h2>
+<p>Gradle es el <strong>sistema de automatización</strong> que descarga librerías y compila tu app. Entenderlo te salva de muchos "errores de sincronización".</p>
+
+<h3>4.0 settings.gradle.kts y build.gradle.kts (raíz)</h3>
+<pre><code><span class="k">pluginManagement</span> {
+    repositories {
+        google { content { includeGroupByRegex("com\\.android.*") ... } }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories { google(); mavenCentral() }
+}
+rootProject.name = "MiReplicaIMC"
+include(":app")
+</code></pre>
+<p><strong>Qué hace:</strong> dice "busca las librerías en Google y Maven", asígnale de nombre <code>MiReplicaIMC</code> al proyecto y haz que el módulo <code>:app</code> forme parte de él.</p>
+
+<h3>4.1 El catálogo de versiones: libs.versions.toml</h3>
+<pre><code>[versions]
+agp = "8.13.2"
+kotlin = "2.3.20"
+coreKtx = "1.18.0"
+junit = "4.13.2"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
+appcompat = "1.7.1"
+material = "1.14.0"
+constraintlayout = "2.2.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }</code></pre>
+<p><strong>Qué hace:</strong> centraliza versiones. Si haces clic en "Sync" compilan las versione indicadas. Las librerías clave de este proyecto son:</p>
+<ul>
+  <li><code>androidx-appcompat</code> → <code>AppCompatActivity</code>, las "Actividades" compatibles con todo Android.</li>
+  <li><code>material</code> → componentes visuales Material 3 (<code>TextInputLayout</code>, <code>MaterialButton</code>, temas).</li>
+  <li><code>androidx-constraintlayout</code> → layout de restricciones (presente por defecto aunque acá usemos ScrollView/LinearLayout).</li>
+  <li><code>androidx.core-ktx</code> → extensiones Kotlin para las APIs de Android.</li>
+</ul>
+
+<h3 id="appgradle">4.1 app/build.gradle.kts <span class="chip-tu">LO COMPLETAS TÚ</span></h3>
+<div class="caja tu"><strong class="tit">En la práctica</strong>
+En <code>MiReplicaIMC2</code> este archivo ya vino casi listo. <strong>Tú agregaste a mano el bloque <code>buildFeatures</code></strong> para activar ViewBinding, y luego sincronizaste (botón <strong>Sync Now</strong>). Sin la sincronización, las clases <code>ActivityMainBinding</code> no existen aún.
+</div>
+<pre><code><span class="k">import</span> org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
+<span class="k">plugins</span> {
+    alias(libs.plugins.android.application)   <span class="c">// define que es una app Android</span>
+    alias(libs.plugins.kotlin.android)        <span class="c">// habilita Kotlin</span>
+}
+
+<span class="k">android</span> {
+    namespace = <span class="s">"com.example.mireplicaimc"</span>   <span class="c">// espacio de nombres para generar la clase R</span>
+    compileSdk = 36                            <span class="c">// versión del SDK con la que se COMPILA</span>
+
+    defaultConfig {
+        applicationId = <span class="s">"com.example.mireplicaimc"</span> <span class="c">// identidad única de la app</span>
+        minSdk = 26                             <span class="c">// versión mínima soportada</span>
+        targetSdk = 36                          <span class="c">// versión objetivo del comportamiento</span>
+        versionCode = 1                         <span class="c">// número interno para versiones</span>
+        versionName = <span class="s">"1.0"</span>               <span class="c">// versión visible para el usuario</span>
+
+        testInstrumentationRunner = <span class="s">"androidx.test.runner.AndroidJUnitRunner"</span>
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false             <span class="c">// no se reduce el código (solo para estudiar)</span>
+            proguardFiles(
+                getDefaultProguardFile(<span class="s">"proguard-android-optimize.txt"</span>),
+                <span class="s">"proguard-rules.pro"</span>
+            )
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17   <span class="c">// se compila con Java 17</span>
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }  <span class="c">// Kotlin también a JVM 17</span>
+    }
+
+    <span class="k">buildFeatures</span> {
+        viewBinding = true          <span class="c">&lt;-- ESTE BLOQUE LO AGREGAS TÚ MANUALMENTE</span>
+    }
+}
+
+<span class="k">dependencies</span> {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.constraintlayout)
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+}</code></pre>
+
+<h3 id="binding">4.2 Tu código: el bloque <code>buildFeatures</code> <span class="chip-tu">LO COMPLETAS TÚ</span></h3>
+<p>Este es el fragmento exacto que debes escribir a mano dentro del bloque <code>android { ... }</code>:</p>
+<pre><code><span class="k">buildFeatures</span> {
+    viewBinding = true
+}</code></pre>
+<table>
+  <tr><th>Línea</th><th>¿Qué hace?</th></tr>
+  <tr><td><code>buildFeatures {</code></td><td>Abre el conjunto de funciones de compilación opcionales. Aquí se activan ViewBinding, Compose, etc.</td></tr>
+  <tr><td><code>viewBinding = true</code></td><td>Activa <strong>ViewBinding</strong>: por cada archivo de layout, Gradle genera una clase (p.&nbsp;ej. <code>activity_main.xml</code> → <code>ActivityMainBinding</code>) que nos da acceso directo a los elementos por su <code>android:id</code>, sin usar <code>findViewById</code>.</td></tr>
+</table>
+<div class="caja warn"><strong class="tit">No olvides sincronizar</strong>
+Después de escribir este bloque debes pulsar <strong>Sync Now</strong> (o <em>File → Sync Project with Gradle Files</em>). Solo así Gradle genera las clases de binding y Android Studio deja de marcar en rojo <code>ActivityMainBinding</code>.
+</div>
+</section>
+
+<!-- ==================== 5. MANIFEST ==================== -->
+<section id="manifest">
+<h2>5. AndroidManifest.xml</h2>
+<p>Declara las dos Actividades y qué hace cada una en el sistema:</p>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"&gt;
+
+    &lt;application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MiReplicaIMC"&gt;
+
+        &lt;activity
+            android:name=".ResultadoActivity"
+            android:exported="false" /&gt;
+
+        &lt;activity
+            android:name=".MainActivity"
+            android:exported="true"&gt;
+            &lt;intent-filter&gt;
+                &lt;action android:name="android.intent.action.MAIN" /&gt;
+                &lt;category android:name="android.intent.category.LAUNCHER" /&gt;
+            &lt;/intent-filter&gt;
+        &lt;/activity&gt;
+    &lt;/application&gt;
+&lt;/manifest&gt;</code></pre>
+<table>
+  <tr><th>Elemento / atributo</th><th>¿Para qué sirve?</th></tr>
+  <tr><td><code>&lt;application&gt;</code></td><td>Nodo raíz de la app: aquí se agrupan todos los componentes.</td></tr>
+  <tr><td><code>android:label="@string/app_name"</code></td><td>Nombre que se muestra bajo el ícono en el launcher. Referencia a <code>strings.xml</code>.</td></tr>
+  <tr><td><code>android:theme="@style/Theme.MiReplicaIMC"</code></td><td>Tema global definido en <code>themes.xml</code> (colores de la barra de estado, etc.).</td></tr>
+  <tr><td><code>&lt;activity android:name=".MainActivity" android:exported="true"&gt;</code></td><td><code>.MainActivity</code> = clase dentro del paquete. <code>exported=true</code> + intent-filter <code>MAIN/LAUNCHER</code> indica que es la <strong>pantalla de inicio</strong> (la que arranca al abrir la app).</td></tr>
+  <tr><td><code>&lt;activity android:name=".ResultadoActivity" android:exported="false"&gt;</code></td><td>Segunda pantalla. <code>exported=false</code> porque <strong>solo puede abrirla la propia app</strong> (no otros programas).</td></tr>
+</table>
+<div class="caja info"><strong class="tit">Regla de oro</strong>
+Cada <code>Activity</code> que exista en tu código DEBE estar declarada aquí. Si agregas <code>ResultadoActivity</code> en Kotlin pero no la declaras, la app crashea al intentar abrirla.
+</div>
+</section>
+
+<!-- ==================== 6. RECURSOS ==================== -->
+<section id="recursos">
+<h2>6. Recursos y diseño</h2>
+<p>Todo lo visual está separado del código. Ventaja: puedes cambiar colores, textos o medidas <strong>sin tocar el Kotlin</strong>.</p>
+
+<h3>6.1 strings.xml — todos los textos</h3>
+<pre><code>&lt;resources&gt;
+    &lt;string name="app_name"&gt;MiReplicaIMC&lt;/string&gt;
+    &lt;string name="titulo_principal"&gt;Calculadora de IMC&lt;/string&gt;
+    &lt;string name="subtitulo_principal"&gt;Ingrese sus datos para obtener una referencia de su índice de masa corporal.&lt;/string&gt;
+    &lt;string name="seccion_datos"&gt;Datos personales&lt;/string&gt;
+    &lt;string name="formula_imc"&gt;El cálculo utiliza el peso en kilogramos dividido entre la estatura al cuadrado.&lt;/string&gt;
+    &lt;string name="hint_nombre"&gt;Nombre&lt;/string&gt;
+    &lt;string name="hint_peso"&gt;Peso&lt;/string&gt;
+    &lt;string name="hint_estatura"&gt;Estatura&lt;/string&gt;
+    &lt;string name="unidad_kilogramos"&gt;kg&lt;/string&gt;
+    &lt;string name="unidad_metros"&gt;m&lt;/string&gt;
+    &lt;string name="boton_calcular"&gt;Calcular IMC&lt;/string&gt;
+    &lt;string name="boton_volver"&gt;Realizar otro cálculo&lt;/string&gt;
+    &lt;string name="error_nombre"&gt;Ingrese su nombre&lt;/string&gt;
+    &lt;string name="error_peso"&gt;Ingrese un peso válido mayor que cero&lt;/string&gt;
+    &lt;string name="error_estatura"&gt;Ingrese una estatura válida mayor que cero&lt;/string&gt;
+    &lt;string name="resultado_titulo"&gt;Resultado del cálculo&lt;/string&gt;
+    &lt;string name="resultado_descripcion"&gt;Esta información fue enviada desde la pantalla anterior.&lt;/string&gt;
+    &lt;string name="resultado_nombre_inicial"&gt;Nombre no disponible&lt;/string&gt;
+    &lt;string name="resultado_imc_inicial"&gt;IMC: 0.00&lt;/string&gt;
+    &lt;string name="resultado_nombre_formato"&gt;Resultado de %1$s&lt;/string&gt;
+    &lt;string name="resultado_imc_formato"&gt;IMC: %1$.2f&lt;/string&gt;
+    &lt;string name="resultado_nota"&gt;El IMC es una referencia general y no reemplaza una evaluación profesional.&lt;/string&gt;
+    &lt;string name="valor_no_disponible"&gt;No disponible&lt;/string&gt;
+    &lt;string name="clasificacion_bajo_peso"&gt;Bajo peso&lt;/string&gt;
+    &lt;string name="clasificacion_peso_normal"&gt;Peso normal&lt;/string&gt;
+    &lt;string name="clasificacion_sobrepeso"&gt;Sobrepeso&lt;/string&gt;
+    &lt;string name="clasificacion_obesidad"&gt;Obesidad&lt;/string&gt;
+&lt;/resources&gt;</code></pre>
+<ul>
+  <li><code>%1$s</code> → primer argumento de tipo <em>string</em> (el nombre).</li>
+  <li><code>%1$.2f</code> → primer argumento de tipo <em>float</em> con 2 decimales (el IMC se muestra como <code>23.45</code>).</li>
+</ul>
+
+<h3>6.2 colors.xml — la paleta</h3>
+<pre><code>&lt;resources&gt;
+    &lt;color name="azul_oscuro"&gt;#12304A&lt;/color&gt;
+    &lt;color name="azul_principal"&gt;#176B87&lt;/color&gt;
+    &lt;color name="turquesa"&gt;#36A9A1&lt;/color&gt;
+    &lt;color name="blanco"&gt;#FFFFFF&lt;/color&gt;
+    &lt;color name="blanco_suave"&gt;#EDF9F8&lt;/color&gt;
+    &lt;color name="gris_texto"&gt;#506170&lt;/color&gt;
+    &lt;color name="gris_borde"&gt;#C7D8DC&lt;/color&gt;
+    &lt;color name="superficie"&gt;#F3FAF9&lt;/color&gt;
+    &lt;color name="estado_fondo"&gt;#D5F0EC&lt;/color&gt;
+&lt;/resources&gt;</code></pre>
+
+<h3>6.3 dimens.xml — las medidas (creado para este proyecto)</h3>
+<pre><code>&lt;resources&gt;
+    &lt;dimen name="screen_padding"&gt;20dp&lt;/dimen&gt;
+    &lt;dimen name="card_padding"&gt;22dp&lt;/dimen&gt;
+    &lt;dimen name="section_gap"&gt;24dp&lt;/dimen&gt;
+    &lt;dimen name="item_gap"&gt;14dp&lt;/dimen&gt;
+    &lt;dimen name="item_gap_small"&gt;8dp&lt;/dimen&gt;
+    &lt;dimen name="button_height"&gt;56dp&lt;/dimen&gt;
+    &lt;dimen name="chip_padding_horizontal"&gt;18dp&lt;/dimen&gt;
+    &lt;dimen name="chip_padding_vertical"&gt;9dp&lt;/dimen&gt;
+    &lt;dimen name="radius_card"&gt;24dp&lt;/dimen&gt;
+    &lt;dimen name="radius_pill"&gt;999dp&lt;/dimen&gt;
+    &lt;dimen name="stroke_width"&gt;1dp&lt;/dimen&gt;
+    &lt;dimen name="text_title"&gt;30sp&lt;/dimen&gt;
+    &lt;dimen name="text_section"&gt;20sp&lt;/dimen&gt;
+    &lt;dimen name="text_body"&gt;15sp&lt;/dimen&gt;
+    &lt;dimen name="text_caption"&gt;13sp&lt;/dimen&gt;
+    &lt;dimen name="text_result"&gt;42sp&lt;/dimen&gt;
+&lt;/resources&gt;</code></pre>
+<div class="caja info"><strong class="tit">dp vs sp</strong>
+<code>dp</code> = densidad de píxeles independiente (medidas). <code>sp</code> = escala independiente píxeles (textos). Con <code>sp</code> el texto respeta el tamaño de letra que configura el usuario.
+</div>
+
+<h3>6.4 themes.xml (claro) y values-night/themes.xml (oscuro)</h3>
+<pre><code>&lt;resources&gt;
+    &lt;style name="Base.Theme.MiReplicaIMC" parent="Theme.Material3.Light.NoActionBar"&gt;
+        &lt;item name="colorPrimary"&gt;@color/azul_principal&lt;/item&gt;
+        &lt;item name="colorOnPrimary"&gt;@color/blanco&lt;/item&gt;
+        &lt;item name="colorSecondary"&gt;@color/turquesa&lt;/item&gt;
+        &lt;item name="colorOnSecondary"&gt;@color/azul_oscuro&lt;/item&gt;
+        &lt;item name="android:statusBarColor"&gt;@color/azul_oscuro&lt;/item&gt;
+        &lt;item name="android:navigationBarColor"&gt;@color/blanco&lt;/item&gt;
+        &lt;item name="android:windowLightStatusBar"&gt;false&lt;/item&gt;
+    &lt;/style&gt;
+
+    &lt;style name="Theme.MiReplicaIMC" parent="Base.Theme.MiReplicaIMC" /&gt;
+&lt;/resources&gt;</code></pre>
+<p><code>values-night/themes.xml</code> declara <code>Theme.MiReplicaIMC</code> con el mismo padre, para mantener consistencia en modo oscuro. <code>NoActionBar</code> = sin barra de título tradicional (usamos layouts propios).</p>
+
+<h3>6.5 Drawables — las formas</h3>
+<table>
+  <tr><th>Drawable</th><th>Dibuja</th></tr>
+  <tr><td><code>bg_screen.xml</code></td><td>Fondo general: gradiente vertical de blanco a <code>superficie</code>.</td></tr>
+  <tr><td><code>bg_panel_hero.xml</code></td><td>Panel superior con gradiente azul → turquesa y bordes redondeados (24dp).</td></tr>
+  <tr><td><code>bg_surface_panel.xml</code></td><td>Tarjeta blanca con borde 1px gris y esquinas redondeadas.</td></tr>
+  <tr><td><code>bg_estado_chip.xml</code></td><td>"Píldora" verde pálido que envuelve la clasificación del IMC.</td></tr>
+</table>
+</section>
+
+<!-- ==================== 7. activity_main.xml ==================== -->
+<section id="layoutmain">
+<h2>7. Tu código: activity_main.xml <span class="chip-tu">LO COMPLETAS TÚ</span></h2>
+<p>Interfaz de la pantalla del formulario. Tú escribiste todo el contenido partiendo solo del <code>ScrollView</code> inicial.</p>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:fillViewport="true"&gt;
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding"&gt;
+
+        &lt;LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_panel_hero"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding"&gt;
+
+            &lt;TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo_principal"
+                android:textColor="@color/blanco"
+                android:textSize="@dimen/text_title"
+                android:textStyle="bold"/&gt;
+
+            &lt;TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_gap_small"
+                android:text="@string/subtitulo_principal"
+                android:textColor="@color/blanco_suave"
+                android:textSize="@dimen/text_body"/&gt;
+        &lt;/LinearLayout&gt;
+
+        &lt;LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/bg_surface_panel"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding"&gt;
+
+            &lt;TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/seccion_datos"
+                android:textColor="@color/azul_oscuro"
+                android:textSize="@dimen/text_section"
+                android:textStyle="bold"/&gt;
+
+            &lt;TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_gap_small"
+                android:text="@string/formula_imc"
+                android:textColor="@color/gris_texto"
+                android:textSize="@dimen/text_body"/&gt;
+
+            &lt;com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutNombre"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_gap"
+                android:hint="@string/hint_nombre"&gt;
+
+                &lt;com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="personName"
+                    android:inputType="textCapWords"/&gt;
+            &lt;/com.google.android.material.textfield.TextInputLayout&gt;
+
+            &lt;com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutPeso"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_gap"
+                android:hint="@string/hint_peso"
+                app:suffixText="@string/unidad_kilogramos"&gt;
+
+                &lt;com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPeso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"/&gt;
+            &lt;/com.google.android.material.textfield.TextInputLayout&gt;
+
+            &lt;com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutEstatura"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_gap"
+                android:hint="@string/hint_estatura"
+                app:suffixText="@string/unidad_metros"&gt;
+
+                &lt;com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEstatura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:importantForAutofill="no"
+                    android:inputType="numberDecimal"/&gt;
+            &lt;/com.google.android.material.textfield.TextInputLayout&gt;
+
+            &lt;com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonCalcular"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="@dimen/section_gap"
+                android:text="@string/boton_calcular"
+                android:textAllCaps="false"
+                android:textStyle="bold"/&gt;
+        &lt;/LinearLayout&gt;
+    &lt;/LinearLayout&gt;
+&lt;/ScrollView&gt;</code></pre>
+
+<h3>Explicación elemento a elemento</h3>
+<table>
+  <tr><th>Elemento</th><th>¿Para qué funciona?</th></tr>
+  <tr><td><code>ScrollView</code></td><td>Contenedor que permite <strong>desplazamiento vertical</strong> cuando el contenido excede la pantalla (teclado abierto, pantallas pequeñas). <code>fillViewport="true"</code> hace que el fondo llene la altura aunque haya poco contenido. Solo admite UN hijo directo.</td></tr>
+  <tr><td><code>LinearLayout</code> externo</td><td>Dispone los hijos en <strong>una sola columna</strong> (<code>orientation="vertical"</code>) con padding uniforme <code>screen_padding</code>.</td></tr>
+  <tr><td><code>LinearLayout</code> con <code>bg_panel_hero</code></td><td>Panel de presentación ("hero") con el título del app y su subtítulo. Es decorativo.</td></tr>
+  <tr><td><code>TextView</code> título</td><td>Texto grande, blanco y en negrita. Tamaño definido en <code>dimens</code>.</td></tr>
+  <tr><td><code>LinearLayout</code> con <code>bg_surface_panel</code></td><td>Tarjeta blanca con borde que agrupa el formulario.</td></tr>
+  <tr><td><code>TextView</code> "Datos personales"</td><td>Encabezado de sección en azul oscuro.</td></tr>
+  <tr><td><code>TextView</code> "El cálculo utiliza..."</td><td>Nota explicativa de la fórmula, en gris.</td></tr>
+  <tr><td><code>TextInputLayout</code> (<code>inputLayoutNombre</code>)</td><td>Contenedor de Material que envuelve un campo de texto y <strong>sabe mostrar mensajes de error</strong> debajo del campo (lo usamos con <code>binding.inputLayoutNombre.error</code>). El estilo <code>OutlinedBox</code> dibuja el borde.</td></tr>
+  <tr><td><code>TextInputEditText</code> (<code>editTextNombre</code>)</td><td>El campo donde se escribe. <code>inputType="textCapWords"</code> activa el teclado de texto con mayúscula inicial.</td></tr>
+  <tr><td><code>TextInputLayout</code>/<code>EditText</code> peso</td><td><code>inputType="numberDecimal"</code> abre el teclado numérico con decimal. <code>app:suffixText="@string/unidad_kilogramos"</code> agrega el sufijo <strong>"kg"</strong>. <code>importantForAutofill="no"</code> desactiva el autocompletado en un campo numérico.</td></tr>
+  <tr><td><code>TextInputLayout</code>/<code>EditText</code> estatura</td><td>Igual que el peso, con sufijo <strong>"m"</strong>.</td></tr>
+  <tr><td><code>MaterialButton</code> (<code>buttonCalcular</code>)</td><td>Botón Material en ancho completo (<code>match_parent</code>) y alto <code>button_height</code>. <code>textAllCaps="false"</code> evita el texto en MAYÚSCULAS automático.</td></tr>
+</table>
+<div class="caja tu"><strong class="tit">Clave para ViewBinding</strong>
+Los <code>android:id</code> definidos aquí generan <strong>automáticamente</strong> referencias en las clases de binding: <code>inputLayoutNombre</code> → <code>binding.inputLayoutNombre</code>, <code>buttonCalcular</code> → <code>binding.buttonCalcular</code>, etc. Por eso los IDs deben coincidir exactamente con los que uses en Kotlin.
+</div>
+</section>
+
+<!-- ==================== 8. activity_resultado.xml ==================== -->
+<section id="layoutresult">
+<h2>8. Tu código: activity_resultado.xml <span class="chip-tu">LO COMPLETAS TÚ</span></h2>
+<p>Pantalla de resultado. Recibe el nombre, IMC y clasificación enviados por la pantalla anterior.</p>
+<pre><code>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_screen"
+    android:fillViewport="true"&gt;
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="@dimen/screen_padding"&gt;
+
+        &lt;TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/resultado_titulo"
+            android:textColor="@color/azul_oscuro"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"/&gt;
+
+        &lt;TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_gap_small"
+            android:text="@string/resultado_descripcion"
+            android:textColor="@color/gris_texto"
+            android:textSize="@dimen/text_body"/&gt;
+
+        &lt;LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/section_gap"
+            android:background="@drawable/bg_surface_panel"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="@dimen/card_padding"&gt;
+
+            &lt;TextView
+                android:id="@+id/textViewNombreResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/resultado_nombre_inicial"
+                android:textColor="@color/azul_oscuro"
+                android:textSize="@dimen/text_section"
+                android:textStyle="bold"/&gt;
+
+            &lt;TextView
+                android:id="@+id/textViewImcResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_gap"
+                android:text="@string/resultado_imc_inicial"
+                android:textColor="@color/azul_principal"
+                android:textSize="@dimen/text_result"
+                android:textStyle="bold"/&gt;
+
+            &lt;TextView
+                android:id="@+id/textViewClasificacionResultado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_gap"
+                android:background="@drawable/bg_estado_chip"
+                android:paddingHorizontal="@dimen/chip_padding_horizontal"
+                android:paddingVertical="@dimen/chip_padding_vertical"
+                android:text="@string/valor_no_disponible"
+                android:textColor="@color/azul_oscuro"
+                android:textSize="@dimen/text_body"
+                android:textStyle="bold"/&gt;
+
+            &lt;TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/section_gap"
+                android:gravity="center"
+                android:text="@string/resultado_nota"
+                android:textColor="@color/gris_texto"
+                android:textSize="@dimen/text_caption"/&gt;
+        &lt;/LinearLayout&gt;
+
+        &lt;com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVolver"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height"
+            android:layout_marginTop="@dimen/section_gap"
+            android:text="@string/boton_volver"
+            android:textAllCaps="false"
+            android:textStyle="bold"/&gt;
+    &lt;/LinearLayout&gt;
+&lt;/ScrollView&gt;</code></pre>
+
+<h3>Explicación elemento a elemento</h3>
+<table>
+  <tr><th>Elemento</th><th>¿Para qué funciona?</th></tr>
+  <tr><td><code>textViewNombreResultado</code></td><td>Muestra el nombre recibido. Tiene un texto inicial por defecto ("Nombre no disponible") que Kotlin sobrescribirá.</td></tr>
+  <tr><td><code>textViewImcResultado</code></td><td>Muestra el valor del IMC con la fuente más grande (<code>text_result</code> = 42sp) y color principal. Por defecto "IMC: 0.00".</td></tr>
+  <tr><td><code>textViewClasificacionResultado</code></td><td>La clasificación (Bajo peso / Normal / Sobrepeso / Obesidad) envuelta en el "chip" <code>bg_estado_chip</code> con paddings laterales.</td></tr>
+  <tr><td><code>TextView</code> nota</td><td>Texto pequeño y centrado con la advertencia de que el IMC no reemplaza una evaluación profesional. Buen ejemplo de <strong>texto de responsabilidad</strong>.</td></tr>
+  <tr><td><code>MaterialButton</code> (<code>buttonVolver</code>)</td><td>Al presionarlo llama a <code>finish()</code> para volver a la pantalla anterior (el formulario queda intacto).</td></tr>
+</table>
+</section>
+
+<!-- ==================== 9. ARQUITECTURA ==================== -->
+<section id="arquitectura">
+<h2>9. Arquitectura y flujo</h2>
+<p>Este proyecto usa un patrón sencillo y clásico de Android: <strong>dos Actividades que se comunican mediante un Intent</strong>.</p>
+
+<h3>9.1 ¿Qué es una Activity?</h3>
+<p>Una <code>Activity</code> es una <strong>pantalla</strong> de la app. Tiene un ciclo de vida y su método principal es <code>onCreate()</code>, que se ejecuta UNA vez cuando se crea:</p>
+<ol class="flujo">
+  <li><strong>onCreate</strong> → se crea la pantalla (inflamos el layout y configuramos botones).</li>
+  <li><strong>onStart / onResume</strong> → la pantalla se muestra y queda interactiva.</li>
+  <li><strong>onPause / onStop</strong> → otra pantalla la cubre (por ejemplo, al navegar).</li>
+  <li><strong>onDestroy</strong> → la pantalla se destruye.</li>
+</ol>
+
+<h3>9.2 ¿Qué es ViewBinding?</h3>
+<p>Es el mecanismo <strong>que activaste con <code>buildFeatures { viewBinding = true }</code></strong>. Por cada layout genera una clase que expone sus vistas. Ejemplo:</p>
+<pre><code>private lateinit var binding: ActivityMainBinding
+
+binding = ActivityMainBinding.inflate(layoutInflater) <span class="c">// convierte el XML en vistas</span>
+setContentView(binding.root)                          <span class="c">// las muestra en pantalla</span>
+binding.buttonCalcular.setOnClickListener { ... }      <span class="c">// sin findViewById</span></code></pre>
+<p>Beneficios: código más corto, <strong>menos errores</strong> (si un ID no existe falla en compilación, no en ejecución) y tipado seguro.</p>
+
+<h3>9.3 ¿Qué es un Intent con extras?</h3>
+<p>Un <code>Intent</code> es un "mensaje para navegar". Puede llevar datos adicionales (<strong>extras</strong>) en un <code>Bundle</code>:</p>
+<pre><code>val intent = Intent(this, ResultadoActivity::class.java).apply {
+    putExtra(ResultadoActivity.EXTRA_NOMBRE, nombre)
+    putExtra(ResultadoActivity.EXTRA_IMC, imc)
+    putExtra(ResultadoActivity.EXTRA_CLASIFICACION, clasificacion)
+}
+startActivity(intent)</code></pre>
+<p>La pantalla destino los recupera con <code>intent.getStringExtra(...)</code> o <code>intent.getDoubleExtra(...)</code>.</p>
+
+<h3>9.4 Diagrama del flujo completo</h3>
+<ol class="flujo">
+  <li>El usuario abre la app → Android lanza <code>MainActivity</code> (por el intent-filter del manífest).</li>
+  <li><code>onCreate</code> infla <code>activity_main.xml</code> y asocia el clic del botón.</li>
+  <li>El usuario escribe nombre, peso y estatura y presiona <strong>Calcular IMC</strong>.</li>
+  <li>Se valida cada campo; si algo falla, se muestra el error bajo el campo y se detiene.</li>
+  <li>Si todo es válido → <code>calcularIMC()</code> y <code>clasificarIMC()</code>.</li>
+  <li>Se crea un <code>Intent</code> con los 3 extras y se llama <code>startActivity()</code>.</li>
+  <li>Se abre <code>ResultadoActivity</code> → <code>onCreate</code> infla <code>activity_resultado.xml</code> y llama <code>mostrarResultado()</code>.</li>
+  <li><code>mostrarResultado()</code> lee los extras y pinta los 3 <code>TextView</code>.</li>
+  <li>Si el usuario presiona <strong>Realizar otro cálculo</strong> → <code>finish()</code> cierra la pantalla y vuelve al formulario.</li>
+</ol>
+</section>
+
+<!-- ==================== 10. MainActivity ==================== -->
+<section id="mainkt">
+<h2>10. Tu código: MainActivity.kt <span class="chip-tu">LO COMPLETAS TÚ</span></h2>
+<p><strong>Responsabilidad:</strong> mostrar el formulario, validar los datos, calcular el IMC y enviar los resultados a la otra pantalla.</p>
+<pre><code>package com.example.mireplicaimc
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import com.example.mireplicaimc.databinding.ActivityMainBinding
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.buttonCalcular.setOnClickListener {
+            calcularYMostrarResultado()
+        }
+    }
+
+    private fun calcularYMostrarResultado() {
+        val nombre = binding.editTextNombre.text.toString().trim()
+        val peso = binding.editTextPeso.text.toString().toDoubleOrNull()
+        val estatura = binding.editTextEstatura.text.toString().toDoubleOrNull()
+        var formularioValido = true
+
+        binding.inputLayoutNombre.error = null
+        binding.inputLayoutPeso.error = null
+        binding.inputLayoutEstatura.error = null
+
+        if (nombre.isBlank()) {
+            binding.inputLayoutNombre.error = getString(R.string.error_nombre)
+            formularioValido = false
+        }
+        if (peso == null || peso &lt;= PESO_MINIMO) {
+            binding.inputLayoutPeso.error = getString(R.string.error_peso)
+            formularioValido = false
+        }
+        if (estatura == null || estatura &lt;= ESTATURA_MINIMA) {
+            binding.inputLayoutEstatura.error = getString(R.string.error_estatura)
+            formularioValido = false
+        }
+        if (!formularioValido || peso == null || estatura == null) {
+            return
+        }
+
+        val imc = calcularIMC(peso, estatura)
+        val clasificacion = clasificarIMC(imc)
+
+        val intent = Intent(this, ResultadoActivity::class.java).apply {
+            putExtra(ResultadoActivity.EXTRA_NOMBRE, nombre)
+            putExtra(ResultadoActivity.EXTRA_IMC, imc)
+            putExtra(ResultadoActivity.EXTRA_CLASIFICACION, clasificacion)
+        }
+        startActivity(intent)
+    }
+
+    private fun calcularIMC(peso: Double, estatura: Double): Double {
+        return peso / (estatura * estatura)
+    }
+
+    private fun clasificarIMC(imc: Double): String {
+        return when {
+            imc &lt; LIMITE_PESO_NORMAL -&gt; getString(R.string.clasificacion_bajo_peso)
+            imc &lt; LIMITE_SOBREPESO -&gt; getString(R.string.clasificacion_peso_normal)
+            imc &lt; LIMITE_OBESIDAD -&gt; getString(R.string.clasificacion_sobrepeso)
+            else -&gt; getString(R.string.clasificacion_obesidad)
+        }
+    }
+
+    companion object {
+        private const val PESO_MINIMO = 0.0
+        private const val ESTATURA_MINIMA = 0.0
+        private const val LIMITE_PESO_NORMAL = 18.5
+        private const val LIMITE_SOBREPESO = 25.0
+        private const val LIMITE_OBESIDAD = 30.0
+    }
+}</code></pre>
+
+<h3>Explicación parte por parte</h3>
+<table>
+  <tr><th class="num">#</th><th>Fragmento</th><th>¿Qué hace?</th></tr>
+  <tr><td class="num">1</td><td><code>import android.os.Bundle</code> ... <code>databinding.ActivityMainBinding</code></td><td>Los imports que tú agregaste: <code>Bundle</code> es el estado que se guarda al rotar la pantalla; <code>AppCompatActivity</code> es la base de la pantalla; <code>Intent</code> permite navegar; y la clase de ViewBinding generada desde <code>activity_main.xml</code>.</td></tr>
+  <tr><td class="num">2</td><td><code>private lateinit var binding: ActivityMainBinding</code></td><td>Declara la variable de binding. <code>lateinit</code> = "la inicializaré luego en <code>onCreate</code>". Evita hacerla nullable.</td></tr>
+  <tr><td class="num">3</td><td><code>override fun onCreate(...)</code></td><td>Método del ciclo de vida: se ejecuta al crear la pantalla. <strong>Importante:</strong> empieza con <code>on</code> minúscula. Siempre llama <code>super.onCreate()</code>.</td></tr>
+  <tr><td class="num">4</td><td><code>binding = ActivityMainBinding.inflate(layoutInflater)</code></td><td>Convierte el XML en vistas reales y genera el objeto <code>binding</code>.</td></tr>
+  <tr><td class="num">5</td><td><code>setContentView(binding.root)</code></td><td>Le dice a la pantalla "esto es lo que vas a mostrar".</td></tr>
+  <tr><td class="num">6</td><td><code>binding.buttonCalcular.setOnClickListener { ... }</code></td><td>Asocia el evento de clic del botón al método que calcula.</td></tr>
+  <tr><td class="num">7</td><td><code>val nombre = ...text.toString().trim()</code></td><td>Lee el texto escrito, lo convierte a <code>String</code> y le quita espacios al inicio/fin. El nombre no se convierte a número.</td></tr>
+  <tr><td class="num">8</td><td><code>val peso = ...toDoubleOrNull()</code></td><td>Convierte el texto a <code>Double</code>. Si no es un número válido devuelve <code>null</code> (en vez de lanzar una excepción). ¡Ese <code>.text</code> es el que hace falta: sin él leerías el objeto, no el contenido!</td></tr>
+  <tr><td class="num">9</td><td><code>binding.inputLayoutPeso.error = null</code></td><td>Limpia los errores previos cada vez que se presiona el botón (para que no se acumulen).</td></tr>
+  <tr><td class="num">10</td><td><code>if (nombre.isBlank()) { ...error = getString(R.string.error_nombre) ... }</code></td><td>Validación: si el nombre está vacío, muestra el mensaje Bajo la caja del campo y registra que el formulario no es válido.</td></tr>
+  <tr><td class="num">11</td><td><code>peso == null || peso &lt;= PESO_MINIMO</code></td><td>El peso es inválido si no se pudo convertir (null) o si es ≤ 0.</td></tr>
+  <tr><td class="num">12</td><td><code>if (!formularioValido || peso == null || estatura == null) return</code></td><td>"Cortocircuito": si algo falló, salimos del método sin navegar. La segunda parte es para que el compilador sepa que <code>peso</code> y <code>estatura</code> ya no son null más abajo.</td></tr>
+  <tr><td class="num">13</td><td><code>val imc = calcularIMC(peso, estatura)</code></td><td>Ejecuta la fórmula: <code>peso / (estatura * estatura)</code>. La estatura debe escribirse en metros (ej. 1.70).</td></tr>
+  <tr><td class="num">14</td><td><code>val clasificacion = clasificarIMC(imc)</code></td><td>Convierte el número en una etiqueta (Bajo peso, Normal, etc.) según la OMS.</td></tr>
+  <tr><td class="num">15</td><td><code>Intent(this, ResultadoActivity::class.java).apply { putExtra(...) }</code></td><td>Crea el "mensaje de navegación" y le adjunta los 3 datos (nombre, IMC, clasificación) bajo claves constantes definidas en <code>ResultadoActivity</code>.</td></tr>
+  <tr><td class="num">16</td><td><code>startActivity(intent)</code></td><td>Lanza la segunda pantalla.</td></tr>
+  <tr><td class="num">17</td><td><code>companion object { private const val ... }</code></td><td>Constantes de la clase: los límites del IMC y los valores mínimos de validación. <code>const val</code> = valor fijo en tiempo de compilación, no cambia y no se puede crear más de una copia por objeto.</td></tr>
+</table>
+
+<div class="caja ok"><strong class="tit">Por qué "val" y no "var"</strong>
+Uso <code>val</code> (inmutable, no cambia después de asignarse) para los datos del formulario. Solo <code>binding</code> y <code>formularioValido</code> usan <code>var</code>/<code>lateinit</code> porque su valor cambia según la ejecución.
+</div>
+</section>
+
+<!-- ==================== 11. ResultadoActivity ==================== -->
+<section id="resultkt">
+<h2>11. Tu código: ResultadoActivity.kt <span class="chip-tu">LO COMPLETAS TÚ</span></h2>
+<p><strong>Responsabilidad:</strong> recibir los datos del <code>Intent</code> y mostrarlos.</p>
+<pre><code>package com.example.mireplicaimc
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.example.mireplicaimc.databinding.ActivityResultadoBinding
+
+class ResultadoActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityResultadoBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityResultadoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        mostrarResultado()
+
+        binding.buttonVolver.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun mostrarResultado() {
+        val nombre = intent.getStringExtra(EXTRA_NOMBRE)
+            ?: getString(R.string.valor_no_disponible)
+        val imc = intent.getDoubleExtra(EXTRA_IMC, IMC_POR_DEFECTO)
+        val clasificacion = intent.getStringExtra(EXTRA_CLASIFICACION)
+            ?: getString(R.string.valor_no_disponible)
+
+        binding.textViewNombreResultado.text =
+            getString(R.string.resultado_nombre_formato, nombre)
+        binding.textViewImcResultado.text =
+            getString(R.string.resultado_imc_formato, imc)
+        binding.textViewClasificacionResultado.text = clasificacion
+    }
+
+    companion object {
+        const val EXTRA_NOMBRE = "extra_nombre"
+        const val EXTRA_IMC = "extra_imc"
+        const val EXTRA_CLASIFICACION = "extra_clasificacion"
+        private const val IMC_POR_DEFECTO = 0.0
+    }
+}</code></pre>
+
+<h3>Explicación parte por parte</h3>
+<table>
+  <tr><th class="num">#</th><th>Fragmento</th><th>¿Qué hace?</th></tr>
+  <tr><td class="num">1</td><td><code>private lateinit var binding: ActivityResultadoBinding</code></td><td>Binding generado desde <code>activity_resultado.xml</code>.</td></tr>
+  <tr><td class="num">2</td><td><code>onCreate</code> → inflar + <code>setContentView(binding.root)</code></td><td>Igual que en <code>MainActivity</code>: construye y muestra la pantalla.</td></tr>
+  <tr><td class="num">3</td><td><code>mostrarResultado()</code></td><td>Llamado justo después de mostrar la vista: lee los extras y los pinta.</td></tr>
+  <tr><td class="num">4</td><td><code>intent.getStringExtra(EXTRA_NOMBRE) ?: getString(R.string.valor_no_disponible)</code></td><td>Recupera el nombre. El operador <code>?:</code> (Elvis) significa "si viene null, usa este valor por defecto". Así la app nunca crashea si el extra falta.</td></tr>
+  <tr><td class="num">5</td><td><code>intent.getDoubleExtra(EXTRA_IMC, IMC_POR_DEFECTO)</code></td><td>Recupera el IMC (número decimal). El segundo parámetro es el valor por defecto si no viene el dato.</td></tr>
+  <tr><td class="num">6</td><td><code>binding.textViewNombreResultado.text = getString(R.string.resultado_nombre_formato, nombre)</code></td><td>Compone el texto con formato: <code>"Resultado de %1$s"</code> se completa con el nombre → "Resultado de Juan".</td></tr>
+  <tr><td class="num">7</td><td><code>getString(R.string.resultado_imc_formato, imc)</code></td><td>Compone <code>"IMC: %1$.2f"</code> con el IMC → "IMC: 23.45" (2 decimales). <strong>Cuidado:</strong> si no pasas el argumento <code>imc</code>, la app crashea porque la string espera uno.</td></tr>
+  <tr><td class="num">8</td><td><code>binding.buttonVolver.setOnClickListener { finish() }</code></td><td><code>finish()</code> cierra esta pantalla y devuelve a <code>MainActivity</code>. Los datos del formulario siguen ahí porque nunca se destruyó.</td></tr>
+  <tr><td class="num">9</td><td><code>companion object { const val EXTRA_... }</code></td><td>Claves usadas para nombrar los extras. Están en <code>ResultadoActivity</code> (la receptora) para que <code>MainActivity</code> las use sin "magia": <code>ResultadoActivity.EXTRA_NOMBRE</code>.</td></tr>
+</table>
+</section>
+
+<!-- ==================== 12. LÓGICA IMC ==================== -->
+<section id="logica">
+<h2>12. Lógica del IMC</h2>
+<h3>12.1 La fórmula</h3>
+<p>El <strong>Índice de Masa Corporal</strong> relaciona el peso con la estatura:</p>
+<table>
+  <tr><th>Símbolo</th><th>Significado</th><th>En nuestro código</th></tr>
+  <tr><td>Peso</td><td>Kilogramos (kg)</td><td><code>peso</code></td></tr>
+  <tr><td>Estatura</td><td>Metros (m)</td><td><code>estatura</code></td></tr>
+  <tr><td>IMC</td><td><code>peso / estatura²</code></td><td><code>peso / (estatura * estatura)</code></td></tr>
+</table>
+<p>Ejemplo: un peso de 70&nbsp;kg y 1.75&nbsp;m → <code>70 / (1.75*1.75)</code> = <strong>22.86</strong>.</p>
+
+<h3>12.2 Clasificación según la OMS</h3>
+<table>
+  <tr><th>Categoría</th><th>Rango</th><th>Condición en el <code>when</code></th></tr>
+  <tr><td>Bajo peso</td><td>menos de 18.5</td><td><code>imc &lt; 18.5</code></td></tr>
+  <tr><td>Peso normal</td><td>18.5 a 24.9</td><td><code>imc &lt; 25</code> (después de descartar &lt;18.5)</td></tr>
+  <tr><td>Sobrepeso</td><td>25.0 a 29.9</td><td><code>imc &lt; 30</code></td></tr>
+  <tr><td>Obesidad</td><td>30 o más</td><td><code>else</code></td></tr>
+</table>
+
+<h3>12.3 Por qué se usan <code>&lt;</code> (no <code>&lt;=</code>)</h3>
+<p>El <code>when</code> evalúa de arriba hacia abajo y se detiene en la <strong>primera condición verdadera</strong>. Con <code>&lt;</code>:</p>
+<ul>
+  <li>IMC = 18.5 → pasa la 1ª (<code>&lt;18.5</code> es falso) → cae en "Peso normal". Correcto según OMS, porque 18.5 YA es normal.</li>
+  <li>IMC = 25.0 → cae en "Sobrepeso". Correcto.</li>
+  <li>IMC = 30.0 → cae en "Obesidad". Correcto.</li>
+</ul>
+<div class="caja info"><strong class="tit">Orden importa</strong>
+Las condiciones van de menor a mayor. Si las cambias de orden, los rangos se desordenarían. Es un clásico en toda sustentación.
+</div>
+</section>
+
+<!-- ==================== 13. ERRORES COMUNES ==================== -->
+<section id="errores">
+<h2>13. Errores comunes (los que corregiste)</h2>
+
+<h3>13.1 "OnCreate overrides nothing"</h3>
+<div class="caja warn"><strong class="tit">Causa</strong>
+Escribiste <code>OnCreate</code> con <strong>mayúscula</strong>. Kotlin distingue mayúsculas/minúsculas: el método real de <code>AppCompatActivity</code> es <code>onCreate</code> (a minúsculas). Con <code>OnCreate</code> le dices a Kotlin "inventa un método nuevo que no existe".
+</div>
+<pre><code><span class="c">// ❌ Mal</span>
+override fun OnCreate(savedInstanceState: Bundle?) {
+
+<span class="c">// ✅ Bien</span>
+override fun onCreate(savedInstanceState: Bundle?) {</code></pre>
+
+<h3>13.2 Falta <code>.text</code> al leer el campo de estatura</h3>
+<div class="caja warn"><strong class="tit">Causa</strong>
+<code>binding.editTextEstatura.toString()</code> devuelve la representación <strong>del objeto</strong>, no lo que escribió el usuario. Por eso la estatura siempre daba <code>null</code> y nunca validaba.
+</div>
+<pre><code><span class="c">// ❌ Mal (lee el objeto del campo)</span>
+val estatura = binding.editTextEstatura.toString().toDoubleOrNull()
+
+<span class="c">// ✅ Bien (lee el TEXTO del campo)</span>
+val estatura = binding.editTextEstatura.text.toString().toDoubleOrNull()</code></pre>
+
+<h3>13.3 Faltó el argumento del formato <code>%1$.2f</code></h3>
+<div class="caja warn"><strong class="tit">Causa</strong>
+La string <code>"IMC: %1$.2f"</code> espera un valor. Sin el argumento, en ejecución se lanza <code>MissingFormatArgumentException</code> (la app se cierra). El formato exige pasarle el dato que reemplaza al "hueco".
+</div>
+<pre><code><span class="c">// ❌ Mal (falta el valor)</span>
+getString(R.string.resultado_imc_formato)
+
+<span class="c">// ✅ Bien (se le pasa imc)</span>
+getString(R.string.resultado_imc_formato, imc)</code></pre>
+
+<h3>13.4 ScrollView con <code>wrap_content</code> en lugar de <code>match_parent</code></h3>
+<div class="caja warn"><strong class="tit">Causa</strong>
+Si la raíz <code>ScrollView</code> mide <code>wrap_content</code>, no ocupa la pantalla completa y el fondo degradado puede quedar cortado. La raíz de la pantalla debe ser <code>match_parent</code>.
+</div>
+<pre><code><span class="c">// ✅ Bien</span>
+android:layout_width="match_parent"
+android:layout_height="match_parent"</code></pre>
+</section>
+
+<!-- ==================== 14. BUENAS PRÁCTICAS ==================== -->
+<section id="buenas">
+<h2>14. Buenas prácticas aplicadas</h2>
+<ul>
+  <li><strong>Textos externalizados:</strong> ningún texto "quemado" en el código o layout; todo en <code>strings.xml</code>. Facilita traducciones y evita fugas de texto.</li>
+  <li><strong>Colores y medidas en recursos:</strong> paleta y tamaños centralizados; cambiar el tema se hace en un solo lugar.</li>
+  <li><strong>Constantes con significado:</strong> los límites del IMC en <code>const val</code> dentro del <code>companion object</code>; se leen mejor que un <code>18.5</code> suelto y se reutilizan.</li>
+  <li><strong>Validación amigable:</strong> los errores aparecen exactamente bajo el campo que falla usando el mecanismo de <code>TextInputLayout</code>.</li>
+  <li><strong>Defensa ante datos faltantes:</strong> en <code>ResultadoActivity</code> se usan valores por defecto (<code>?:</code> y <code>IMC_POR_DEFECTO</code>) para no crashear nunca.</li>
+  <li><strong>Nombres de IDs descriptivos:</strong> prefijo que indica el tipo (<code>inputLayout_</code>, <code>editText_</code>, <code>textView_</code>, <code>button_</code>) y la función, en camelCase.</li>
+  <li><strong>Separar lógica de la interfaz:</strong> cálculo y clasificación están en métodos privados, fáciles de entender y probar.</li>
+  <li><strong>Mensaje de responsabilidad:</strong> la nota final recuerda que el IMC es una referencia, no un diagnóstico.</li>
+</ul>
+
+<div class="caja ok"><strong class="tit">Para tu sustentación</strong>
+Domina estos 5 conceptos: (1) qué es una Activity y el ciclo de vida, (2) cómo funciona ViewBinding y por qué activar <code>viewBinding</code> en Gradle, (3) cómo navegar con Intent y pasar datos con extras, (4) cómo se lee/valida un formulario, y (5) cómo se calcula y clasifica el IMC con límites OMS. Si puedes explicar esos 5 con tu propio proyecto, estás listo.
+</div>
+</section>
+
+</main>
+</div>
+
+<script>
+  const topBtn = document.getElementById('topBtn');
+  window.addEventListener('scroll', () => {
+    topBtn.classList.toggle('visible', window.scrollY > 400);
+  });
+  topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+  document.querySelectorAll('main pre').forEach(pre => {
+    const wrap = document.createElement('div');
+    wrap.className = 'code-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    const langbar = document.createElement('div');
+    langbar.className = 'langbar';
+    const etiqueta = document.createElement('span');
+    etiqueta.textContent = pre.querySelector('.c') ? 'Código' : 'Código';
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copiar';
+    langbar.appendChild(etiqueta);
+    langbar.appendChild(btn);
+    wrap.insertBefore(langbar, pre);
+    btn.addEventListener('click', async () => {
+      const texto = pre.innerText;
+      try {
+        await navigator.clipboard.writeText(texto);
+        btn.textContent = '¡Copiado!';
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = texto;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.textContent = '¡Copiado!';
+      }
+      setTimeout(() => { btn.textContent = 'Copiar'; }, 1500);
+    });
+  });
+
+  const secciones = document.querySelectorAll('main section[id]');
+  const links = document.querySelectorAll('aside.toc a[href^="#"]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('activo', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, {rootMargin: '-40% 0px -55% 0px'});
+  secciones.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
